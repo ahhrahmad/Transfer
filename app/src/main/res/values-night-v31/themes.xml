@@ -1,0 +1,15 @@
+<resources>
+
+    <!-- Night + API 31+: Material 3 with wallpaper ("Material You") dynamic colors.
+         Night qualifier wins over apiVersion in resource resolution, so values-night
+         previously shadowed values-v31; this file keeps night dark on the M3 theme. -->
+    <style name="Theme.TransferApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="android:windowLightStatusBar">false</item>
+
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeStyle">@style/CustomActionModeStyle</item>
+        <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
+    </style>
+
+</resources>
