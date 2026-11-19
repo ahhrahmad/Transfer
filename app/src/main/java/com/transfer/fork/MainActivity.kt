@@ -555,6 +555,11 @@ class MainActivity : AppCompatActivity() {
         if (qrBitmap != null) {
             ivQRCode.setImageBitmap(qrBitmap)
             tvQRUrl.text = url
+            val night = (resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK) ==
+                android.content.res.Configuration.UI_MODE_NIGHT_YES
+            tvQRUrl.setTextColor(
+                if (night) 0xFFE6E0E9.toInt() else 0xFF1D1B20.toInt()
+            )
 
             MaterialAlertDialogBuilder(this)
                 .setView(dialogView)
