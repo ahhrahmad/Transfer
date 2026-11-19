@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-package com.transfer.util
+package com.transfer.fork.util
 
 /**
  * A dropdown adapter showing labeled IP entries in the list, but only the raw value when closed.

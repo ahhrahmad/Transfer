@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
-package com.transfer.util
+package com.transfer.fork.util
 
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.net.toUri
-import com.transfer.BuildConfig
+import com.transfer.fork.BuildConfig
 
 class ErrorReport {
     val baseUri = "https://github.com/matan-h/Transfer/issues/new?template=bug_report.yml&".toUri();

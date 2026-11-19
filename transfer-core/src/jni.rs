@@ -204,7 +204,7 @@ impl Hooks for JniHooks {
 
 /// `RustServer.start0(configJson, callback) -> handle`
 #[unsafe(no_mangle)]
-pub extern "system" fn Java_com_transfer_server_RustServer_start0<'local>(
+pub extern "system" fn Java_com_transfer_fork_server_RustServer_start0<'local>(
     mut env: JNIEnv<'local>,
     _class: JClass<'local>,
     config: JString<'local>,
@@ -226,7 +226,7 @@ pub extern "system" fn Java_com_transfer_server_RustServer_start0<'local>(
 
 /// `RustServer.stop0(handle)`
 #[unsafe(no_mangle)]
-pub extern "system" fn Java_com_transfer_server_RustServer_stop0(
+pub extern "system" fn Java_com_transfer_fork_server_RustServer_stop0(
     _env: JNIEnv,
     _class: JClass,
     handle: jlong,

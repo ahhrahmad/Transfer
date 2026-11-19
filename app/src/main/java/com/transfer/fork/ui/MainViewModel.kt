@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-package com.transfer.ui
+package com.transfer.fork.ui
 
 import android.app.Application
 import android.content.ClipData
@@ -13,10 +13,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.transfer.R
-import com.transfer.util.Constants
-import com.transfer.util.FileItem
-import com.transfer.util.FileUtils
+import com.transfer.fork.R
+import com.transfer.fork.util.Constants
+import com.transfer.fork.util.FileItem
+import com.transfer.fork.util.FileUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.transfer"
+    namespace = "com.transfer.fork"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.transfer"
+        applicationId = "com.transfer.fork"
         minSdk = 29
         targetSdk = 35
         versionCode = 601

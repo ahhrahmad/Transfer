@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
-package com.transfer.ui
+package com.transfer.fork.ui
 
 import android.content.Context
 import android.util.AttributeSet
 import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
 import com.google.android.material.materialswitch.MaterialSwitch
-import com.transfer.R
-import com.transfer.util.Constants
+import com.transfer.fork.R
+import com.transfer.fork.util.Constants
 
 /**
  * Preference row rendered with Material 3 `MaterialSwitch` (looks like the system

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-package com.transfer.ui
+package com.transfer.fork.ui
 
 import android.content.Intent
 import android.net.Uri
@@ -18,10 +18,10 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.content.ContextCompat
-import com.transfer.util.Constants
-import com.transfer.util.FileUtils
-import com.transfer.MainActivity
-import com.transfer.R
+import com.transfer.fork.util.Constants
+import com.transfer.fork.util.FileUtils
+import com.transfer.fork.MainActivity
+import com.transfer.fork.R
 
 
 class SetupActivity : AppCompatActivity() {

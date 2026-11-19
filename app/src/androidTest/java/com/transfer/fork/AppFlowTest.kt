@@ -1,4 +1,4 @@
-package com.transfer
+package com.transfer.fork
 
 import android.content.Context
 import android.util.Log
@@ -18,9 +18,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
 import androidx.test.uiautomator.*
-import com.transfer.ui.SetupActivity
-import com.transfer.util.Constants
-import com.transfer.util.FileAdapter
+import com.transfer.fork.ui.SetupActivity
+import com.transfer.fork.util.Constants
+import com.transfer.fork.util.FileAdapter
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject

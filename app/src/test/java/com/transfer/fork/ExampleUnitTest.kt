@@ -1,4 +1,4 @@
-package com.transfer
+package com.transfer.fork
 
 import org.junit.Test
 

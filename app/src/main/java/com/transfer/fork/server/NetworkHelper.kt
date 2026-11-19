@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-package com.transfer.server
+package com.transfer.fork.server
 
 import android.content.BroadcastReceiver
 import android.content.Context

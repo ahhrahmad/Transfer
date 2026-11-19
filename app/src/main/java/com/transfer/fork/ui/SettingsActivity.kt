@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-package com.transfer.ui
+package com.transfer.fork.ui
 
 import android.net.Uri
 import android.os.Bundle
@@ -14,9 +14,9 @@ import androidx.documentfile.provider.DocumentFile
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import com.transfer.util.Constants
-import com.transfer.util.FileUtils
-import com.transfer.R
+import com.transfer.fork.util.Constants
+import com.transfer.fork.util.FileUtils
+import com.transfer.fork.R
 
 
 class SettingsActivity : AppCompatActivity() {

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-package com.transfer.util
+package com.transfer.fork.util
 
 object Constants {
     const val SERVER_PORT = 8000

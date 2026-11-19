@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
-package com.transfer.server
+package com.transfer.fork.server
 
 import android.content.Context
 import android.net.Uri
 import androidx.documentfile.provider.DocumentFile
-import com.transfer.util.FileUtils
+import com.transfer.fork.util.FileUtils
 import kotlinx.coroutines.runBlocking
 import org.json.JSONArray
 import org.json.JSONObject

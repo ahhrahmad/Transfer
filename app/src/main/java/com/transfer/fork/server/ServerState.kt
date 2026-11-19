@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-package com.transfer.server
+package com.transfer.fork.server
 
 sealed class ServerState {
     object Starting : ServerState()

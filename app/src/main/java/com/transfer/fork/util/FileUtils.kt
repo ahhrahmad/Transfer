@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-package com.transfer.util
+package com.transfer.fork.util
 
 import android.annotation.SuppressLint
 import android.content.Context

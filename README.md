@@ -72,7 +72,7 @@ The original, unchanged release is at [matan-h/Transfer releases](https://github
 
 ## What changed in this fork
 
-- Package / applicationId: `com.matanh.transfer` → `com.transfer`
+- Package / applicationId: `com.matanh.transfer` → `com.transfer.fork`
 - HTTP core rewritten in Rust (`transfer-core/`, [axum](https://crates.io/crates/axum)), invoked from Kotlin through JNI. The original Ktor server and its dependencies (`ktor-server-*`) were removed.
 - Native libraries for `arm64-v8a`, `armeabi-v7a`, and `x86_64` are built from `transfer-core/` via `cargo-ndk` (`./gradlew cargoNdk` or `assembleDebug`).
 - Material You / Material 3 UI, dynamic colors, `values-v31` and `values-night-v31` themes; A12+ devices follow the wallpaper.

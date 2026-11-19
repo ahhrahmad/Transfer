@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
-package com.transfer.util
+package com.transfer.fork.util
 
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
-import com.transfer.R
-import com.transfer.ui.MainViewModel
+import com.transfer.fork.R
+import com.transfer.fork.ui.MainViewModel
 
 /**
  * A helper class to process incoming share intents (for text, single files, and multiple files).

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-package com.transfer.ui
+package com.transfer.fork.ui
 
 import android.content.Intent
 import android.graphics.ColorMatrix
@@ -15,8 +15,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import com.google.android.material.button.MaterialButton
-import com.transfer.BuildConfig
-import com.transfer.R
+import com.transfer.fork.BuildConfig
+import com.transfer.fork.R
 import timber.log.Timber
 
 

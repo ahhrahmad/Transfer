@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-package com.transfer.server
+package com.transfer.fork.server
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -15,9 +15,9 @@ import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.core.net.toUri
 import androidx.documentfile.provider.DocumentFile
-import com.transfer.util.Constants
-import com.transfer.MainActivity
-import com.transfer.R
+import com.transfer.fork.util.Constants
+import com.transfer.fork.MainActivity
+import com.transfer.fork.R
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
@@ -80,7 +80,7 @@ class FileServerService : Service(), SharedPreferences.OnSharedPreferenceChangeL
         // Constants for IP Permission Notification
         const val PERMISSION_NOTIFICATION_CHANNEL_ID = "ip_permission_channel"
         const val ACTION_IP_PERMISSION_RESPONSE =
-            "com.transfer.ACTION_IP_PERMISSION_RESPONSE"
+            "com.transfer.fork.ACTION_IP_PERMISSION_RESPONSE"
         const val EXTRA_IP_ADDRESS = "extra_ip_address"
         const val EXTRA_IP_PERMISSION_APPROVED = "extra_ip_permission_approved"
     }

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-package com.transfer
+package com.transfer.fork
 
 import android.annotation.SuppressLint
 import android.content.ClipData
@@ -36,20 +36,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputLayout
-import com.transfer.server.FileServerService
-import com.transfer.server.ServerState
-import com.transfer.ui.AboutActivity
-import com.transfer.ui.MainViewModel
-import com.transfer.ui.SettingsActivity
-import com.transfer.util.Constants
-import com.transfer.util.ErrorReport
-import com.transfer.util.FileAdapter
-import com.transfer.util.FileItem
-import com.transfer.util.FileUtils
-import com.transfer.util.IpEntry
-import com.transfer.util.IpEntryAdapter
-import com.transfer.util.QRCodeGenerator
-import com.transfer.util.ShareHandler
+import com.transfer.fork.server.FileServerService
+import com.transfer.fork.server.ServerState
+import com.transfer.fork.ui.AboutActivity
+import com.transfer.fork.ui.MainViewModel
+import com.transfer.fork.ui.SettingsActivity
+import com.transfer.fork.util.Constants
+import com.transfer.fork.util.ErrorReport
+import com.transfer.fork.util.FileAdapter
+import com.transfer.fork.util.FileItem
+import com.transfer.fork.util.FileUtils
+import com.transfer.fork.util.IpEntry
+import com.transfer.fork.util.IpEntryAdapter
+import com.transfer.fork.util.QRCodeGenerator
+import com.transfer.fork.util.ShareHandler
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
