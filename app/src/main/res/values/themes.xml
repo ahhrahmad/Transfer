@@ -32,6 +32,7 @@
 
         <!-- Action Mode and Toolbar Styling -->
         <item name="windowActionModeOverlay">true</item>
+        <item name="preferenceCategoryTitleTextColor">?android:attr/textColorPrimary</item>
         <item name="actionModeStyle">@style/CustomActionModeStyle</item>
         <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
     </style>
