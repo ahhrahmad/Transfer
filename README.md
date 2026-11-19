@@ -1,6 +1,18 @@
 # Transfer
 
-> **Personal fork** of [MatanH/Transfer](https://github.com/MatanH/Transfer) (MIT). Changes vs upstream: package/applicationId renamed to `com.transfer`, the HTTP core rewritten in Rust (`transfer-core/`, linked via JNI), and a new Material 3 icon. Store links and screenshots below refer to the original release.
+> **Personal learning fork** of [MatanH/Transfer](https://github.com/MatanH/Transfer).
+>
+> Original project: <https://github.com/matan-h/Transfer>
+> Original author: [matan-h](https://github.com/matan-h) (`© matan-h`, MIT license — see `LICENSE`)
+>
+> This is a private, non-commercial fork made for learning and personal use. It is **not affiliated
+> with, endorsed by, or supported by matan-h**. It is not published to the Play Store or IzzyOnDroid;
+> the only links below are the build-from-source instructions and a link to the original releases.
+>
+> Screenshots show this fork. See [What changed in this fork](#what-changed-in-this-fork) and
+> [License and attribution](#license-and-attribution).
+
+
 
 A simple local file server app for Android. Download and upload files quickly across devices over Wi-Fi — no cables, no cloud.
 
@@ -42,18 +54,37 @@ Imagine you need to transfer a file between your laptop and desktop — but you 
     * **Upload**: Easily select files from your phone’s storage to add them to the shared folder.
     * **Paste**: Paste text from your phone’s clipboard directly into a new `.txt` file in the shared folder with a single tap.
 
-## How to get the app
-#### Recommended ways:
-1. from [IzzyOnDroid](https://apt.izzysoft.de/fdroid/index/apk/com.matanh.transfer) (use an F-Droid client like Neo Store, Droid-ify, or add IzzyOnDroid repo.)
+## How to get this fork
 
-  <a href="https://apt.izzysoft.de/fdroid/index/apk/com.matanh.transfer">
-    <img alt="Get it on IzzyOnDroid" src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroidButtonGreyBorder_nofont.png" height="54">
-  </a>
+This fork is not published to app stores. Build it from source:
 
-2. [from Google play!](https://play.google.com/store/apps/details?id=com.matanh.transfer) - new
+```bash
+git clone --branch rust-core https://github.com/ahhrahmad/Transfer.git
+cd Transfer
 
-#### Other ways
-Directly from [github releases](https://github.com/matan-h/Transfer/releases) (and you can also point Obtainium to this link.)
+# Requirements: JDK 21, Android SDK/NDK (see CONTRIBUTING.md), Rust 1.85+ with cargo-ndk
+./gradlew assembleDebug
+```
+
+The debug APK lands at `app/build/outputs/apk/debug/app-debug.apk`.
+
+The original, unchanged release is at [matan-h/Transfer releases](https://github.com/matan-h/Transfer/releases).
+
+## What changed in this fork
+
+- Package / applicationId: `com.matanh.transfer` → `com.transfer`
+- HTTP core rewritten in Rust (`transfer-core/`, [axum](https://crates.io/crates/axum)), invoked from Kotlin through JNI. The original Ktor server and its dependencies (`ktor-server-*`) were removed.
+- Native libraries for `arm64-v8a`, `armeabi-v7a`, and `x86_64` are built from `transfer-core/` via `cargo-ndk` (`./gradlew cargoNdk` or `assembleDebug`).
+- Material You / Material 3 UI, dynamic colors, `values-v31` and `values-night-v31` themes; A12+ devices follow the wallpaper.
+- New adaptive launcher icon: `folder_open` glyph (Material Symbols, Apache-2.0) on white; themed (monochrome) layer included. Setup and About layout updated to match.
+- Icons replaced with Material Symbols Rounded; the Settings toggle is a Material 3 `MaterialSwitch`.
+- Fixed the approved-IP cache: `ConcurrentHashMap.contains` (a legacy value check) was used instead of `containsKey`, which made the IP permission dialog reappear for every request.
+- Fixed a race where a fast follow-up request could bypass both the pending-prompt wait and the approved-IP cache, freezing the Rust worker thread.
+- Documentation, `CONTRIBUTING.md`, and instrumented tests updated for the fork.
+- Added fork attribution and a "My GitHub" link to the About screen; the original author credit is retained.
+- Instrumented tests (`AppFlowTest`) run against the Rust server; DocumentsUI interactions made locale-tolerant; 5/5 tests pass on the test device.
+
+Known limitations compared to upstream: no release keystore is bundled (build produces an unsigned release unless you provide `KEYSTORE_*` env vars); upload support on cloud/non-seekable document providers relies on chunked streaming (no `sendfile`); this is a personal fork with no support or release cadence promised.
 
 ## Getting Started
 
@@ -95,5 +126,15 @@ Any contributions, bugs, or feedback are welcome!
 Feel free to open an issue or PR.
 To get started, look at the `CONTRIBUTING.md` file
 
-## License
-this repo is Licensed under the MIT license.
+## License and attribution
+
+The original work and this fork remain under the MIT license; see `LICENSE` for the full text and the original copyright notice that must be retained.
+
+Attribution and third-party notices:
+
+* Original work: copyright (c) matan-h, [matan-h/Transfer](https://github.com/matan-h/Transfer).
+* Modifications in this fork: copyright 2026 ahhrahmad, MIT-licensed.
+* Icons: [Material Symbols](https://fonts.google.com/icons) (Apache License 2.0, Google LLC), used for app icon and UI glyphs.
+* Rust dependencies are listed in `transfer-core/Cargo.lock`; each is distributed under MIT or Apache License 2.0 (including but not limited to `axum`, `tokio`, `jni`, `serde`, `zip`). Android app dependencies are the same versions used by upstream.
+
+This fork is provided as-is, without warranty of any kind. It is not affiliated with or endorsed by the original author. It is a personal learning project; do not redistribute it to app stores under the name "Transfer" without the original author's permission.

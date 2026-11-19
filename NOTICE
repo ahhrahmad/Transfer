@@ -1,0 +1,33 @@
+Transfer (fork) - Third-Party Notices
+=====================================
+
+Original work
+-------------
+Transfer (https://github.com/matan-h/Transfer)
+Copyright (c) matan-h. Licensed under the MIT License; see LICENSE.
+
+Modifications (this fork)
+-------------------------
+Copyright 2026 ahhrahmad. Licensed under the MIT License.
+
+Icons
+-----
+Material Symbols (https://fonts.google.com/icons)
+Copyright Google LLC. Licensed under the Apache License, Version 2.0.
+Used for the launcher icon and UI glyphs.
+
+Rust crates
+-----------
+transfer-core/Cargo.lock lists this fork's Rust dependencies. The principal
+crates are axum, base64, chrono, env_logger, futures-util, jni, libc,
+mime_guess, serde, serde_json, serde_urlencoded, tokio, tokio-util, tower-http
+and zip; each is distributed under MIT or Apache License 2.0.
+
+Android / Kotlin dependencies
+------------------------------
+Same dependency set as upstream (AndroidX, Material Components, Timber,
+OkHttp/Awaitility in tests, etc). Each dependency is licensed under Apache
+License 2.0 or MIT by its respective maintainers.
+
+This fork is a personal learning project. It is not affiliated with or
+endorsed by matan-h. No warranty is provided.
