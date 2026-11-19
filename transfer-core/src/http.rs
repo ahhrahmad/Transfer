@@ -1,5 +1,5 @@
 //! HTTP surface, byte-for-byte compatible with the Ktor implementation
-//! (`app/src/main/java/com/matanh/transfer/server/KtorServer.kt` at v0.6.1).
+//! that shipped at v0.6.1 (file `server/KtorServer.kt` in the upstream repo).
 
 use crate::fs::{format_size, sanitize_name, Fs, Hooks};
 use axum::{

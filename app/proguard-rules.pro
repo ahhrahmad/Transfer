@@ -33,5 +33,5 @@
 -dontwarn org.slf4j.impl.StaticMDCBinder
 
 # JNI: called by name from transfer-core (see transfer-core/src/jni.rs)
--keep class com.matanh.transfer.server.RustServer { *; }
--keep class com.matanh.transfer.server.SafBridge { *; }
+-keep class com.transfer.server.RustServer { *; }
+-keep class com.transfer.server.SafBridge { *; }

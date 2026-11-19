@@ -1,5 +1,7 @@
 # Transfer
 
+> **Personal fork** of [MatanH/Transfer](https://github.com/MatanH/Transfer) (MIT). Changes vs upstream: package/applicationId renamed to `com.transfer`, the HTTP core rewritten in Rust (`transfer-core/`, linked via JNI), and a new Material 3 icon. Store links and screenshots below refer to the original release.
+
 A simple local file server app for Android. Download and upload files quickly across devices over Wi-Fi — no cables, no cloud.
 
 <table>

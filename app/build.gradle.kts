@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.matanh.transfer"
+    namespace = "com.transfer"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.matanh.transfer"
+        applicationId = "com.transfer"
         minSdk = 29
         targetSdk = 35
         versionCode = 601
