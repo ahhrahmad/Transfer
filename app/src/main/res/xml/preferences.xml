@@ -4,7 +4,7 @@
         app:key="pref_category_security_key"
         app:title="@string/pref_category_security">
 
-        <SwitchPreferenceCompat
+        <com.transfer.ui.MaterialSwitchPreference
             app:key="@string/pref_key_ip_permission_enabled"
             app:title="@string/pref_title_ip_permission"
             app:summary="@string/pref_summary_ip_permission"
