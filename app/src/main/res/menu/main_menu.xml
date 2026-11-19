@@ -11,7 +11,7 @@
         android:id="@+id/action_paste"
         android:title="@string/paste_from_clipboard"
         android:icon="@drawable/ic_paste"
-        app:iconTint="@color/toolbar_icon_tint_light"
+        app:iconTint="?attr/colorOnSurface"
     app:showAsAction="ifRoom" />
 
 
@@ -19,7 +19,7 @@
         android:id="@+id/action_settings"
         android:title="@string/settings"
         android:icon="@drawable/ic_settings"
-        app:iconTint="@color/toolbar_icon_tint_light"
+        app:iconTint="?attr/colorOnSurface"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_about"

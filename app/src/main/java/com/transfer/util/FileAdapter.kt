@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.color.MaterialColors
 import com.transfer.R
 
 class FileAdapter(
@@ -32,19 +32,14 @@ class FileAdapter(
 
             if (isSelected) {
                 itemLayout.setBackgroundColor(
-                    ContextCompat.getColor(
-                        itemView.context,
-                        R.color.file_item_selected_background
+                    MaterialColors.getColor(
+                        itemView,
+                        com.google.android.material.R.attr.colorSecondaryContainer
                     )
                 )
                 ivSelectionCheck.visibility = View.VISIBLE
             } else {
-                itemLayout.setBackgroundColor(
-                    ContextCompat.getColor(
-                        itemView.context,
-                        R.color.default_file_item_background
-                    )
-                )
+                itemLayout.setBackgroundColor(android.graphics.Color.TRANSPARENT)
 
                 ivSelectionCheck.visibility = View.GONE
             }

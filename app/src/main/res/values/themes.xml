@@ -4,6 +4,15 @@
         <!-- Background -->
         <item name="android:colorBackground">@color/app_background_color</item>
         <item name="colorSurface">@color/card_background_color</item>
+        <item name="colorPrimaryContainer">@color/colorPrimaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/colorOnPrimaryContainer</item>
+        <item name="colorSecondaryContainer">@color/colorSecondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/colorOnSecondaryContainer</item>
+        <item name="colorSurfaceVariant">@color/colorSurfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/colorOnSurfaceVariant</item>
+        <item name="colorSurfaceContainerHigh">@color/colorSurfaceContainerHigh</item>
+        <item name="colorSecondary">@color/colorPrimary</item>
+        <item name="colorOnSecondary">@color/white</item>
 
         <!-- On Colors -->
         <item name="colorOnPrimary">@color/white</item>
@@ -31,14 +40,17 @@
 
     <!-- menu background -->
     <style name="CustomActionModeStyle" parent="Widget.AppCompat.ActionMode">
-        <item name="background">@drawable/gradient_header</item>
+        <item name="background">?attr/colorSurfaceContainerHigh</item>
+        <item name="titleTextColor">?attr/colorOnSurface</item>
     </style>
 
     <style name="Widget.App.Toolbar" parent="Widget.AppCompat.Toolbar">
-        <item name="android:background">@drawable/gradient_header</item>
-        <item name="titleTextColor">@color/white</item>
+        <item name="android:background">?attr/colorSurface</item>
+        <item name="titleTextColor">?attr/colorOnSurface</item>
+        <item name="navigationIconTint">?attr/colorOnSurface</item>
+        <item name="iconTint">?attr/colorOnSurface</item>
         <item name="popupTheme">@style/AppTheme.PopupOverlay</item>
-        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.Light</item>
     </style>
 
     <!--    control menu text colors-->

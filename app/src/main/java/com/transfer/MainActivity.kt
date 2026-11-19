@@ -369,9 +369,9 @@ class MainActivity : AppCompatActivity() {
                         is ServerState.Starting -> {
                             tvServerStatus.text = getString(R.string.server_starting)
                             tvServerStatus.setTextColor(
-                                ContextCompat.getColor(
-                                    this@MainActivity,
-                                    R.color.colorPrimary
+                                com.google.android.material.color.MaterialColors.getColor(
+                                    tvServerStatus,
+                                    com.google.android.material.R.attr.colorPrimary
                                 )
                             )
                             viewStatusIndicator.background = ContextCompat.getDrawable(

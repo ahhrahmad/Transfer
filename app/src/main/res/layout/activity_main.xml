@@ -17,7 +17,7 @@ android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     app:popupTheme="@style/AppTheme.PopupOverlay"
-    app:titleTextColor="@color/white"/>
+    app:titleTextColor="?attr/colorOnSurface"/>
 </com.google.android.material.appbar.AppBarLayout>
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -95,7 +95,7 @@ app:layout_constraintEnd_toEndOf="parent">
             android:src="@drawable/ic_copy"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/copy_ip_description"
-            app:tint="@color/colorPrimary"/>
+            app:tint="?attr/colorPrimary"/>
 
         <ImageButton
             android:id="@+id/btnStopServer"
@@ -167,6 +167,6 @@ android:layout_gravity="bottom|end"
 android:layout_margin="16dp"
 android:src="@drawable/ic_upload_device"
 android:contentDescription="@string/upload_file"
-app:tint="@color/white"/>
+app:tint="?attr/colorOnPrimaryContainer"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
