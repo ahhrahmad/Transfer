@@ -7,29 +7,17 @@
     android:padding="16dp"
     tools:context=".ui.SetupActivity">
 
-    <ImageView
-        android:id="@+id/ivAppIcon"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:src="@mipmap/ic_launcher_round"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/tvSetupTitle"
-        app:layout_constraintVertical_chainStyle="packed"
-        android:layout_marginBottom="24dp"
-        android:contentDescription="@string/app_name"/>
-
     <TextView
         android:id="@+id/tvSetupTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/setup_title"
         android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
-        app:layout_constraintTop_toBottomOf="@id/ivAppIcon"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/tvSetupDescription"
+        app:layout_constraintVertical_chainStyle="packed"
         android:layout_marginBottom="16dp"/>
 
     <TextView
