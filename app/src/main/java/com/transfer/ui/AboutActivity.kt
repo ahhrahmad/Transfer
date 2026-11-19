@@ -80,6 +80,13 @@ class AboutActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // My GitHub (this fork)
+        val btnMyGithub: MaterialButton = findViewById(R.id.btnMyGithub)
+        btnMyGithub.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, "https://github.com/ahhrahmad".toUri())
+            startActivity(intent)
+        }
+
         // Buy Me a Coffee Button Click
         val btnCoffee: MaterialButton = findViewById(R.id.btnCoffee)
         btnCoffee.setOnClickListener {

@@ -95,6 +95,16 @@
                 android:textColor="?android:attr/textColorPrimary"
                 android:gravity="center"
                 android:autoLink="web"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:id="@+id/tvForkCredit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/fork_credit"
+                android:textSize="12sp"
+                android:textColor="?android:attr/textColorSecondary"
+                android:gravity="center"
                 android:layout_marginBottom="24dp"/>
 
             <!-- Links Section -->
@@ -132,6 +142,19 @@
                     android:textColor="?attr/colorOnSecondaryContainer"
                     android:layout_marginStart="8dp"/>
             </LinearLayout>
+
+            <!-- This fork -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnMyGithub"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/my_github"
+                android:textSize="14sp"
+                android:padding="12dp"
+                android:layout_marginTop="8dp"
+                app:cornerRadius="8dp"
+                android:backgroundTint="?attr/colorPrimaryContainer"
+                android:textColor="?attr/colorOnPrimaryContainer"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

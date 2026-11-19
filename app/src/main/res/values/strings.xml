@@ -111,6 +111,8 @@
     <string name="extra_folder_uri">FOLDER_URI</string>
     <string name="description">Transfer is a simple open-source app for sharing files over your local network.</string>
     <string name="credit">Developed by matan-h • matan-h.com</string>
+    <string name="fork_credit">Based on matan-h/Transfer · fork by ahhrahmad</string>
+    <string name="my_github">My GitHub</string>
     <string name="github">GitHub</string>
     <string name="buy_me_a_coffeeText">Buy Me a Coffee</string>
     <string name="version_name">T%1$d • Version %2$s • matan-h</string>
