@@ -50,6 +50,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/choose_shared_folder"
+        android:textStyle="normal"
         app:icon="@drawable/ic_folder"
         app:iconGravity="textTop"
         android:paddingTop="12dp"
