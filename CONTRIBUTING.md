@@ -3,7 +3,7 @@
 Thank you for in contributing! This app have three main parts:
 
 - **App UI** - Android activities in Kotlin and XML.
-- **HTTP Server** - the HTTP Ktor server the app run.
+- **HTTP Server** - the Rust HTTP core (`transfer-core/`, via JNI) that the app run.
 - **Website** - Plain HTML/JS/CSS served from the app's assets.
 
 Please follow the instructions below to get started.
@@ -42,10 +42,18 @@ This setup live-reloads the site and forwards `/api/*` requests to the emulator.
 - For dark mode: check `res/values-night/colors.xml`.
 - Layouts are in `res/layout/`. the UI code in `src/main/java/.../ui/`, and MainActivity is in `src/main/java/.../MainActivity`.
 
-### HTTP Server (Ktor)
+### HTTP Server (Rust)
 
-- API endpoints (such as /api/upload): `server/KtorServer`
-- Server features (like password protection): `server/FileServerService`
+- The HTTP implementation lives in `transfer-core/` (Rust, axum). Rebuild it with:
+
+```bash
+cargo ndk -t arm64-v8a -t armeabi-v7a -t x86_64 -o app/src/main/jniLibs build --release
+```
+
+`./gradlew assembleDebug` runs this for you via the `cargoNdk` task.
+API endpoints (such as /api/upload): `transfer-core/src/http.rs`
+Android <-> Rust bridge: `server/RustServer.kt` and `server/SafBridge.kt`
+Server features (like password protection): `server/FileServerService`
 
 ---
 

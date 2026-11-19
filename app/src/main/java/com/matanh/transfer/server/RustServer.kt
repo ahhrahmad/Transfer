@@ -22,12 +22,16 @@ object RustServer {
 
     fun configJson(context: Context, port: Int, password: String?): String {
         val assets = JSONObject()
-        context.assets.list("").orEmpty().forEach { name ->
-            assets.put(
-                name,
-                context.assets.open(name).use { it.readBytes().toString(Charsets.UTF_8) },
-            )
-        }
+        // Only the web UI; dependency assets (e.g. an empty `geoid_map` dir) are not servable.
+        val webAssets = setOf("html", "js", "css")
+        context.assets.list("").orEmpty()
+            .filter { it.substringAfterLast('.', "").lowercase() in webAssets }
+            .forEach { name ->
+                assets.put(
+                    name,
+                    context.assets.open(name).use { it.readBytes().toString(Charsets.UTF_8) },
+                )
+            }
         return JSONObject()
             .put("port", port)
             .put("password", password ?: JSONObject.NULL)

@@ -54,7 +54,7 @@ class FileServerService : Service(), SharedPreferences.OnSharedPreferenceChangeL
     val pullRefresh: SharedFlow<Unit> = _pullRefresh.asSharedFlow()
 
     private lateinit var sharedPreferences: SharedPreferences
-    private val approvedIps = mutableMapOf<String, Long>()
+    private val approvedIps = java.util.concurrent.ConcurrentHashMap<String, Long>()
     private lateinit var networkHelper: NetworkHelper
 
     var currentSharedFolderUri: Uri? = null
@@ -62,7 +62,8 @@ class FileServerService : Service(), SharedPreferences.OnSharedPreferenceChangeL
 
     @Volatile
     private var isActivityInForeground = false
-    private val pendingNotificationRequests = mutableMapOf<String, CompletableDeferred<Boolean>>()
+    private val pendingNotificationRequests =
+        java.util.concurrent.ConcurrentHashMap<String, CompletableDeferred<Boolean>>()
 
     private val pendingIntentFlags by lazy {
         PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
@@ -304,15 +305,31 @@ class FileServerService : Service(), SharedPreferences.OnSharedPreferenceChangeL
         logger.d("Requesting IP approval from $ipAddress")
         val now = System.currentTimeMillis()
         approvedIps.entries.removeIf { (_, expiryTime) -> expiryTime <= now }
-        if (approvedIps.contains(ipAddress)) return true
+        if (approvedIps.containsKey(ipAddress)) return true
 
-        val deferred = CompletableDeferred<Boolean>()
+        // Rust asks from several worker threads at once; pack them onto one prompt per IP.
+        val (deferred, isOwner) = synchronized(pendingNotificationRequests) {
+            val existing = pendingNotificationRequests[ipAddress]
+            if (existing != null) {
+                existing to false
+            } else {
+                CompletableDeferred<Boolean>()
+                    .also { pendingNotificationRequests[ipAddress] = it } to true
+            }
+        }
+        if (!isOwner) {
+            return try {
+                deferred.await()
+            } catch (e: CancellationException) {
+                false
+            }
+        }
+
         if (isActivityInForeground) {
             logger.d("Activity is in foreground. Emitting request to UI.")
             _ipPermissionRequests.emit(IpPermissionRequest(ipAddress, deferred))
         } else {
             logger.d("Activity is in background. Showing notification for IP permission.")
-            pendingNotificationRequests[ipAddress] = deferred
             showIpPermissionNotification(ipAddress)
         }
 
@@ -320,9 +337,10 @@ class FileServerService : Service(), SharedPreferences.OnSharedPreferenceChangeL
             deferred.await()
         } catch (e: CancellationException) {
             logger.w("IP approval for $ipAddress was cancelled.")
-            pendingNotificationRequests.remove(ipAddress)
             false
         }
+        pendingNotificationRequests.remove(ipAddress)
+        logger.i("IP approval for $ipAddress: $approved")
 
         if (approved) {
             approvedIps[ipAddress] = now + Constants.IP_PERMISSION_VALIDITY_MS

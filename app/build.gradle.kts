@@ -103,6 +103,9 @@ dependencies {
     // UI Automator
     androidTestImplementation (libs.androidx.uiautomator)
 
+    // JSON parsing in the instrumented tests (Ktor used to provide it transitively)
+    androidTestImplementation (libs.kotlinx.serialization.json)
+
     // OkHttp for making network requests in the test
     androidTestImplementation (libs.okhttp)
 
