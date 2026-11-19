@@ -1,8 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-
-    kotlin("plugin.serialization") version "1.8.0"
 }
 
 android {
@@ -30,6 +28,24 @@ android {
         viewBinding = true
         buildConfig = true // make it possible to import BuildConfig for VERSION_NAME
     }
+
+    // Rust core: built by cargo-ndk so `./gradlew assembleDebug` stays a single command.
+    val cargo = file("${System.getProperty("user.home")}/.cargo/bin/cargo")
+    val rustCore = file("../transfer-core")
+    val cargoNdk = tasks.register<Exec>("cargoNdk") {
+        workingDir = rustCore
+        environment("ANDROID_NDK_HOME", System.getenv("ANDROID_NDK_HOME") ?: "/opt/android-ndk")
+        commandLine(
+            cargo.absolutePath, "ndk",
+            "-t", "arm64-v8a", "-t", "armeabi-v7a", "-t", "x86_64",
+            "-o", "../app/src/main/jniLibs",
+            "build", "--release",
+        )
+        inputs.dir(file("../transfer-core/src"))
+        inputs.file(file("../transfer-core/Cargo.toml"))
+        outputs.dir(file("src/main/jniLibs"))
+    }
+    tasks.named("preBuild") { dependsOn(cargoNdk) }
 
     signingConfigs {
         create("release") {
@@ -62,9 +78,6 @@ android {
 }
 
 dependencies {
-    implementation(libs.ktor.serialization.kotlinx.json.jvm) // For JSON
-    implementation(libs.ktor.serialization.kotlinx.json) // important for kt "Serializable"
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -73,16 +86,6 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
 
     implementation(libs.androidx.preference.ktx)
-    implementation(libs.ktor.server.core.jvm)
-    implementation(libs.ktor.server.cio.jvm)
-
-    // Ktor Features
-    implementation(libs.ktor.server.content.negotiation.jvm)
-    implementation(libs.ktor.server.content.negotiation)
-    implementation(libs.ktor.server.status.pages.jvm)
-    implementation(libs.ktor.server.auth.jvm) // For Basic Auth
-    implementation(libs.ktor.server.cors.jvm)
-    implementation(libs.ktor.server.call.logging.jvm)
     implementation(libs.timber)
     implementation(libs.androidx.activity)
 

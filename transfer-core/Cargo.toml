@@ -1,0 +1,30 @@
+[package]
+name = "transfer_core"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+axum = { version = "0.8.9", features = ["multipart"] }
+base64 = "0.23.1"
+chrono = "0.4.45"
+env_logger = "0.11.11"
+futures-util = "0.3.34"
+jni = "0.21"
+libc = "0.2.191"
+mime_guess = "2.0.5"
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.154"
+serde_urlencoded = "0.7.1"
+tokio = { version = "1.54.1", features = ["rt-multi-thread", "net", "fs", "io-util", "macros", "sync"] }
+tokio-util = { version = "0.7.20", features = ["io"] }
+tower-http = { version = "0.7.1", features = ["cors"] }
+zip = "6"
+
+[lib]
+crate-type = ["rlib", "cdylib"]
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+strip = true

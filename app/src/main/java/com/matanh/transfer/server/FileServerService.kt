@@ -17,9 +17,6 @@ import androidx.documentfile.provider.DocumentFile
 import com.matanh.transfer.util.Constants
 import com.matanh.transfer.MainActivity
 import com.matanh.transfer.R
-import io.ktor.server.cio.CIO
-import io.ktor.server.engine.EmbeddedServer
-import io.ktor.server.engine.embeddedServer
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
@@ -41,7 +38,8 @@ data class IpPermissionRequest(val ipAddress: String, val deferred: CompletableD
 class FileServerService : Service(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     private val binder = LocalBinder()
-    private var ktorServer: EmbeddedServer<*, *>? = null
+    private var rustHandle: Long = 0L
+    private var safBridge: SafBridge? = null
     private val serviceJob = SupervisorJob()
     private val serviceScope = CoroutineScope(Dispatchers.IO + serviceJob)
 
@@ -75,7 +73,7 @@ class FileServerService : Service(), SharedPreferences.OnSharedPreferenceChangeL
     }
 
     companion object {
-        private val logger = Timber.tag("FileServerServiceKtor")
+        private val logger = Timber.tag("FileServerService")
 
         // Constants for IP Permission Notification
         const val PERMISSION_NOTIFICATION_CHANNEL_ID = "ip_permission_channel"
@@ -113,16 +111,16 @@ class FileServerService : Service(), SharedPreferences.OnSharedPreferenceChangeL
                     if (ipAddress != null) {
                         if (currentState is ServerState.Running && currentState.hosts.mainIp != ipAddress) {
                             logger.i("IP address changed from ${currentState.hosts.mainIp} to $ipAddress. restarting server.")
-                            startKtorServer()
+                            startServer()
                         }
                         else{ // ServerState.AwaitNetwork
                             logger.i("IP address changed to $ipAddress.  restarting server.")
-                            startKtorServer()
+                            startServer()
                         }
                         updateNotification()
                     } else {
                         logger.w("WiFi disconnected. Stopping server.")
-                        stopKtorServer(ServerState.AwaitNetwork) // This will also update notification
+                        stopServer(ServerState.AwaitNetwork) // This will also update notification
                     }
 
                 }
@@ -158,9 +156,9 @@ class FileServerService : Service(), SharedPreferences.OnSharedPreferenceChangeL
         // Check if a setting that requires a server restart was changed
         if (key == passwordKey || key == ipPermissionKey) {
             // Only restart if the server is currently running
-            if (ktorServer != null) {
-                logger.i("A server setting changed. Restarting Ktor server.")
-                startKtorServer() // The restart is now handled by startKtorServer
+            if (rustHandle != 0L) {
+                logger.i("A server setting changed. Restarting server.")
+                startServer() // The restart is now handled by startServer
             }
         }
     }
@@ -180,7 +178,7 @@ class FileServerService : Service(), SharedPreferences.OnSharedPreferenceChangeL
                 val folderUriString = intent.getStringExtra(Constants.EXTRA_FOLDER_URI)
                 if (folderUriString != null) {
                     currentSharedFolderUri = folderUriString.toUri()
-                    startKtorServer()
+                    startServer()
                 } else {
                     logger.e("Folder URI missing, stopping service")
                     _serverState.value = ServerState.Error("Folder URI missing.")
@@ -189,7 +187,7 @@ class FileServerService : Service(), SharedPreferences.OnSharedPreferenceChangeL
             }
 
             Constants.ACTION_STOP_SERVICE -> {
-                stopKtorServer(ServerState.UserStopped)
+                stopServer(ServerState.UserStopped)
                 stopSelf()
             }
 
@@ -217,16 +215,19 @@ class FileServerService : Service(), SharedPreferences.OnSharedPreferenceChangeL
         notificationManager.cancel(ipAddress.hashCode())
     }
 
-    private fun startKtorServer() {
+    private fun stopRustServer() {
+        val handle = rustHandle
+        rustHandle = 0L
+        safBridge = null
+        if (handle != 0L) RustServer.stop0(handle)
+    }
+
+    private fun startServer() {
         serviceScope.launch {
             _serverState.value = ServerState.Starting
             updateNotification()
 
-            if (ktorServer != null) {
-                logger.i("Stopping existing Ktor server for restart...")
-                ktorServer?.stop(500, 1000)
-                ktorServer = null
-            }
+            stopRustServer()
 
             if (currentSharedFolderUri == null) {
                 _serverState.value = ServerState.Error("Shared folder not set.")
@@ -252,22 +253,23 @@ class FileServerService : Service(), SharedPreferences.OnSharedPreferenceChangeL
                     return@launch
                 }
 
-                val serviceProvider = { this@FileServerService }
-                ktorServer =
-                    embeddedServer(CIO, port = Constants.SERVER_PORT, host = "0.0.0.0", module = {
-                        ktorServer(
-                            applicationContext, serviceProvider, currentSharedFolderUri!!
-                        )
-                    }).apply {
-                        start(wait = false)
-                    }
+                val bridge = SafBridge(
+                    this@FileServerService, applicationContext, currentSharedFolderUri!!
+                )
+                safBridge = bridge
+                rustHandle = RustServer.start0(
+                    RustServer.configJson(
+                        applicationContext, Constants.SERVER_PORT, getServerPassword()
+                    ),
+                    bridge,
+                )
 
                 _serverState.value = ServerState.Running(networkState, Constants.SERVER_PORT)
-                logger.i("Ktor Server started on $ipAddress:${Constants.SERVER_PORT}")
+                logger.i("Server started on $ipAddress:${Constants.SERVER_PORT}")
                 updateNotification()
             } catch (e: Exception) {
                 val cause = e.cause;
-                if (cause is java.net.BindException){
+                if (cause is java.net.BindException || e is java.net.BindException){
                     logger.e("Port ${Constants.SERVER_PORT} is already in use. ")
                     _serverState.value = ServerState.Error("Port ${Constants.SERVER_PORT} is already in use.")
                 };
@@ -276,23 +278,21 @@ class FileServerService : Service(), SharedPreferences.OnSharedPreferenceChangeL
                 _serverState.value = ServerState.Error("INTERNAL: Failed to start server: ${e.localizedMessage}")
 
                 }
-                ktorServer?.stop(1000, 2000)
-                ktorServer = null
+                stopRustServer()
                 updateNotification()
             }
         }
     }
 
-    private fun stopKtorServer(state: ServerState) {
+    private fun stopServer(state: ServerState) {
         serviceScope.launch {
             try {
-                ktorServer?.stop(1000, 2000)
+                stopRustServer()
             } catch (e: Exception) {
-                logger.e(e, "Exception while stopping Ktor server $e")
+                logger.e(e, "Exception while stopping server $e")
             } finally {
-                ktorServer = null
                 _serverState.value = state
-                logger.i("Ktor Server stopped.")
+                logger.i("Server stopped.")
                 stopForeground(STOP_FOREGROUND_REMOVE)
                 if (state != ServerState.UserStopped) updateNotification() // if user stopped, the notification can be removed
             }
@@ -442,7 +442,7 @@ class FileServerService : Service(), SharedPreferences.OnSharedPreferenceChangeL
         logger.d("FileServerService onDestroy")
         networkHelper.unregister()
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
-        stopKtorServer(ServerState.UserStopped) // Ensure server is stopped
+        stopServer(ServerState.UserStopped) // Ensure server is stopped
         serviceJob.cancel() // Cancel all coroutines in this scope
         super.onDestroy()
     }

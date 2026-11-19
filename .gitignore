@@ -15,3 +15,6 @@ local.properties
 
 venv/
 __pycache__/
+# built by cargo-ndk (gradle task `cargoNdk`)
+/app/src/main/jniLibs/
+/transfer-core/target/
