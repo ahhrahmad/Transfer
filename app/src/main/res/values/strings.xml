@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Transfer (personal fork)</string>
+    <string name="app_name">Transfer Fork</string>
 
     <string name="waiting_for_network">Waiting for network…</string>
     <string name="copy_ip_address">Copy IP Address</string>
@@ -63,7 +63,7 @@
     <string name="cancel">Cancel</string>
 
     <!--    SETUP-->
-    <string name="setup_title">Welcome to Transfer</string>
+    <string name="setup_title">Welcome to Transfer Fork</string>
     <string name="setup_description">To get started, please select a folder on your device that will be used for sharing files.</string>
     <string name="choose_shared_folder">Choose Shared Folder</string>
     <string name="folder_setup_complete">Folder selected. Starting Transfer app.</string>
@@ -109,7 +109,7 @@
     <string name="paste_from_clipboard">Paste from Clipboard</string>
 
     <string name="extra_folder_uri">FOLDER_URI</string>
-    <string name="description">Transfer is a simple open-source app for sharing files over your local network.</string>
+    <string name="description">Transfer Fork is a personal fork of Transfer, an open-source app for sharing files over your local network.</string>
     <string name="credit">Developed by matan-h • matan-h.com</string>
     <string name="fork_credit">Based on matan-h/Transfer · fork by ahhrahmad</string>
     <string name="my_github">My GitHub</string>
