@@ -1,47 +1,37 @@
 /* Base styles and light mode variables */
 :root {
-    --app-background: #F5F5F5;
+    --app-background: #FAFAFE;
     --card-background: #FFFFFF;
-    --primary-color: #1976D2;
-    --primary-gradient-start: #1976D2;
-    --primary-gradient-end: #26A69A;
-    /* Cyan accent */
-    --text-primary: #212121;
-    --text-secondary: #757575;
-    --button-background: #E3F2FD;
-    /* Light blue */
-    --button-text: #1976D2;
+    --primary-color: #6750A4;
+    --primary-gradient-start: #6750A4;
+    --primary-gradient-end: #8672C4;
+    --text-primary: #1D1B20;
+    --text-secondary: #49454F;
+    --button-background: #EADDFF;
+    --button-text: #21005D;
     --white: #FFFFFF;
-    /* Ensures header text is white in light mode */
-    --divider-color: #E0E0E0;
+    --divider-color: #CAC4D0;
     --success-color: #4CAF50;
-    --error-color: #F44336;
+    --error-color: #B3261E;
     --shadow-light: rgba(0, 0, 0, 0.05);
     --shadow-medium: rgba(0, 0, 0, 0.1);
 }
 
 /* Dark mode variables - updated to resemble app's themes.xml/colors.xml */
 body.dark-mode {
-    --app-background: #121212;
-    --card-background: #1E1E1E;
-    --primary-color: #42A5F5;
-    /* Keeping a lighter primary for dark mode header for contrast */
-    --primary-gradient-start: #42A5F5;
-    --primary-gradient-end: #80CBC4;
-    --text-primary: #E0E0E0;
-    --text-secondary: #BDBDBD;
-    /* Updated from #B0B0B0 to #BDBDBD */
-    --button-background: #1E3A5F;
-    /* Updated from #2C3E50 to #1E3A5F */
-    --button-text: #90CAF9;
-    /* Updated from #BBDEFB to #90CAF9 */
-    --white: #FFFFFF;
-    /* Fixed: ensures header text is white on dark gradient */
-    --divider-color: #424242;
+    --app-background: #141218;
+    --card-background: #211F26;
+    --primary-color: #D0BCFF;
+    --primary-gradient-start: #D0BCFF;
+    --primary-gradient-end: #B4A0ED;
+    --text-primary: #E6E0E9;
+    --text-secondary: #CAC4D0;
+    --button-background: #4F378B;
+    --button-text: #EADDFF;
+    --white: #1D1B20;
+    --divider-color: #49454F;
     --success-color: #66BB6A;
-    /* Updated from #4CAF50 to #66BB6A */
-    --error-color: #EF5350;
-    /* Updated from #F44336 to #EF5350 */
+    --error-color: #F2B8B5;
     --shadow-light: rgba(255, 255, 255, 0.05);
     --shadow-medium: rgba(255, 255, 255, 0.1);
 }

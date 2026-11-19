@@ -24,7 +24,7 @@ object RustServer {
     fun configJson(context: Context, port: Int, password: String?): String {
         val assets = JSONObject()
         // Only the web UI; dependency assets (e.g. an empty `geoid_map` dir) are not servable.
-        val webAssets = setOf("html", "js", "css")
+        val webAssets = setOf("html", "js", "css", "svg")
         context.assets.list("").orEmpty()
             .filter { it.substringAfterLast('.', "").lowercase() in webAssets }
             .forEach { name ->

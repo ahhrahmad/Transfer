@@ -78,6 +78,7 @@ The original, unchanged release is at [matan-h/Transfer releases](https://github
 - Material You / Material 3 UI, dynamic colors, `values-v31` and `values-night-v31` themes; A12+ devices follow the wallpaper.
 - New adaptive launcher icon: `folder_open` glyph (Material Symbols, Apache-2.0) on white; themed (monochrome) layer included. Setup and About layout updated to match.
 - Icons replaced with Material Symbols Rounded; the Settings toggle is a Material 3 `MaterialSwitch`.
+- Web UI rebranded to "Transfer Fork" with a Material You-toned palette and matching favicon; all `/api/*` endpoints and browser behaviour are unchanged.
 - Fixed the approved-IP cache: `ConcurrentHashMap.contains` (a legacy value check) was used instead of `containsKey`, which made the IP permission dialog reappear for every request.
 - Fixed a race where a fast follow-up request could bypass both the pending-prompt wait and the approved-IP cache, freezing the Rust worker thread.
 - Documentation, `CONTRIBUTING.md`, and instrumented tests updated for the fork.
