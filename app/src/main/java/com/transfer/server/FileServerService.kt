@@ -339,12 +339,16 @@ class FileServerService : Service(), SharedPreferences.OnSharedPreferenceChangeL
             logger.w("IP approval for $ipAddress was cancelled.")
             false
         }
-        pendingNotificationRequests.remove(ipAddress)
-        logger.i("IP approval for $ipAddress: $approved")
-
-        if (approved) {
-            approvedIps[ipAddress] = now + Constants.IP_PERMISSION_VALIDITY_MS
+        // Removal and cache write must be atomic, or a fast-follow request sees
+        // no pending prompt and no cached approval -> its prompt is never shown
+        // and the Rust worker thread blocks forever.
+        synchronized(pendingNotificationRequests) {
+            pendingNotificationRequests.remove(ipAddress)
+            if (approved) {
+                approvedIps[ipAddress] = now + Constants.IP_PERMISSION_VALIDITY_MS
+            }
         }
+        logger.i("IP approval for $ipAddress: $approved")
         return approved
     }
 
