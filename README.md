@@ -29,9 +29,7 @@ A simple local file server app for Android. Download and upload files quickly ac
   </tr>
 </table>
 
-Transfer makes sharing files across your local network incredibly straightforward. Think of it as a temporary USB stick you can access from any computer or device with a web browser — but without the physical stick, powered by a clean and simple UI.
-
-Basically, a better alternative to running `uploadserver` through Termux.
+Transfer shares a folder over HTTP on your local network. Any device on the same Wi-Fi can open the address shown in the app using a normal web browser. Upstream describes this as an alternative to running `uploadserver` through Termux.
 
 ## The Problem It Solves
 
@@ -59,7 +57,7 @@ Imagine you need to transfer a file between your laptop and desktop — but you 
 This fork is not published to app stores. Build it from source:
 
 ```bash
-git clone --branch rust-core https://github.com/ahhrahmad/Transfer.git
+git clone https://github.com/ahhrahmad/Transfer.git
 cd Transfer
 
 # Requirements: JDK 21, Android SDK/NDK (see CONTRIBUTING.md), Rust 1.85+ with cargo-ndk
@@ -95,7 +93,7 @@ Known limitations compared to upstream: no release keystore is bundled (build pr
 5. Open this address in a web browser on any other device connected to the same Wi-Fi network.
 6. You're in! If IP permissions are on (default), you'll get a prompt on your phone to allow the new device.
 
-It's designed to be that simple. Enjoy your new wireless drive.
+This is the same workflow as the original app; no extra setup is required.
 
 ## FAQ
 ### Why does my browser show an error?
@@ -114,7 +112,9 @@ Transfer copy the files to the shared folder you set earlier.
 ### What happens if you click `T0` in the app version screen
 It becomes `T1` :)
 
-## Planned changes
+## Upstream roadmap (for reference only)
+
+Carried over from the original README; not a roadmap for this personal fork:
 
 - [ ] add an option to change the port in the settings
 - [ ] fallback to hotspot IP in the display.
@@ -122,9 +122,7 @@ It becomes `T1` :)
 
 ## Contributing
 
-Any contributions, bugs, or feedback are welcome!
-Feel free to open an issue or PR.
-To get started, look at the `CONTRIBUTING.md` file
+This is a personal learning fork with no support guarantee. Issues and feedback are welcome, but pull requests may not be reviewed on any schedule. Build instructions and the module layout are documented in `CONTRIBUTING.md`.
 
 ## License and attribution
 
