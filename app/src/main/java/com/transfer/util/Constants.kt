@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 package com.transfer.util
 
 object Constants {

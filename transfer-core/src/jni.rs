@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 //! Android entry points. Kotlin owns SAF and file descriptors; Rust owns sockets and bytes.
 
 use crate::fs::{Created, FileMeta, Fs, Hooks, Opened};

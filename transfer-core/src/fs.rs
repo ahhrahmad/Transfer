@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 //! Platform-neutral file backend. Android implements this over SAF/JNI.
 
 use std::fs::File;

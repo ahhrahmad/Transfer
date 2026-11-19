@@ -11,6 +11,8 @@
 >
 > Screenshots show this fork. See [What changed in this fork](#what-changed-in-this-fork) and
 > [License and attribution](#license-and-attribution).
+>
+> This fork was developed with AI assistance and reviewed/tested by the repository author.
 
 
 

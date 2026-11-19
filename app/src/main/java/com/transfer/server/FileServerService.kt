@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 package com.transfer.server
 
 import android.app.Notification

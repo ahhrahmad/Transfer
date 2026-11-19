@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 //! HTTP surface, byte-for-byte compatible with the Ktor implementation
 //! that shipped at v0.6.1 (file `server/KtorServer.kt` in the upstream repo).
 

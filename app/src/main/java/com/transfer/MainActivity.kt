@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 package com.transfer
 
 import android.annotation.SuppressLint

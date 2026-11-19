@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 //! Linux reference build: same core the Android app links, backed by a plain directory.
 
 use std::{collections::HashMap, path::PathBuf, sync::Arc};
