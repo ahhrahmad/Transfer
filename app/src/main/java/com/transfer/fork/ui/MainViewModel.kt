@@ -93,17 +93,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         if (clipboard.hasPrimaryClip() && clipboard.primaryClipDescription?.hasMimeType("text/plain") == true) {
             val textToPaste = clipboard.primaryClip?.getItemAt(0)?.text?.toString()
             if (!textToPaste.isNullOrEmpty()) {
-                viewModelScope.launch(Dispatchers.IO) {
-                    val file = FileUtils.createTextFileInDir(getApplication(), folderUri, "paste", "txt", textToPaste)
-                    withContext(Dispatchers.Main) {
-                        if (file != null && file.exists()) {
-                            Toast.makeText(getApplication(), getApplication<Application>().getString(R.string.text_pasted_to_file, file.name), Toast.LENGTH_SHORT).show()
-                            loadFiles(folderUri) // Refresh file list
-                        } else {
-                            Toast.makeText(getApplication(), R.string.failed_to_paste_text, Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
+                viewModelScope.launch {
+                val file = FileUtils.createTextFileInDir(getApplication(), folderUri, "paste", "txt", textToPaste)
+                if (file != null && file.exists()) {
+                    Toast.makeText(getApplication(), getApplication<Application>().getString(R.string.text_pasted_to_file, file.name), Toast.LENGTH_SHORT).show()
+                    // Incrementally add the new file instead of re-listing the whole folder (faster).
+                    val newItem = FileItem(name = file.name ?: "paste.txt", size = file.length(), lastModified = file.lastModified(), uri = file.uri)
+                    _files.value = (_files.value.orEmpty() + newItem)
+                } else {
+                    Toast.makeText(getApplication(), R.string.failed_to_paste_text, Toast.LENGTH_SHORT).show()
+                }}
             } else {
                 Toast.makeText(getApplication(), R.string.clipboard_empty, Toast.LENGTH_SHORT).show()
             }

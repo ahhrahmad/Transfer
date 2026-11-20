@@ -130,7 +130,7 @@ class SettingsActivity : AppCompatActivity() {
                 // Capitalize the storage volume name (e.g. "primary:" -> "Primary:").
                 val summary = if (raw.contains(":")) {
                     val idx = raw.indexOf(":")
-                    raw.substring(0, idx).replaceFirstChar { it.uppercaseChar() } + raw.substring(idx)
+                    raw.substring(0, idx).replaceFirstChar { it.uppercaseChar() } + ": " + raw.substring(idx + 1).trimStart()
                 } else raw
                 folderPreference?.summary = summary
             } else {
