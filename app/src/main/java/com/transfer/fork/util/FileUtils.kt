@@ -41,10 +41,13 @@ object FileUtils {
         extension: String,
         startFromOne: Boolean = false
     ): String = withContext(Dispatchers.IO) {
+        // List files once (findFile() re-queries the provider each call, O(n) per call).
+        val existing = docDir.listFiles().mapNotNull { it.name }.toHashSet()
+
         // If we’re not starting from 1, try the plain name first:
         if (!startFromOne) {
             val plainName = "$name.$extension"
-            if (docDir.findFile(plainName) == null) {
+            if (plainName !in existing) {
                 return@withContext plainName
             }
         }
@@ -54,7 +57,7 @@ object FileUtils {
         do {
             candidate = "${name}_$count.$extension"
             count++
-        } while (docDir.findFile(candidate) != null)
+        } while (candidate in existing)
 
         return@withContext candidate
     }
