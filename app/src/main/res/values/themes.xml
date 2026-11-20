@@ -46,6 +46,7 @@
 
     <style name="Widget.App.Overflow" parent="Widget.AppCompat.ActionButton.Overflow">
         <item name="srcCompat">@drawable/ic_more_vert</item>
+        <item name="android:tint">?attr/colorOnSurface</item>
     </style>
 
     <style name="Widget.App.Toolbar" parent="Widget.AppCompat.Toolbar">
