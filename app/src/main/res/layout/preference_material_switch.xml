@@ -31,14 +31,11 @@
             android:textAppearance="?android:attr/textAppearanceListItemSecondary" />
     </LinearLayout>
 
-    <com.google.android.material.materialswitch.MaterialSwitch
+    <ImageView
         android:id="@+id/material_switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="52dp"
+        android:layout_height="32dp"
         android:layout_marginStart="24dp"
-        android:focusable="false"
-        android:textOn=""
-        android:textOff=""
-        app:showText="false" />
-
+        android:contentDescription="@string/pref_title_ip_permission"
+        android:src="@drawable/ic_toggle_off" />
 </LinearLayout>
