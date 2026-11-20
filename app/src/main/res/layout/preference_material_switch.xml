@@ -21,17 +21,14 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:singleLine="true"
-            android:textStyle="bold"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textSize="15sp" />
+            android:textAppearance="?android:attr/textAppearanceListItem" />
 
         <TextView
             android:id="@android:id/summary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="2dp"
-            android:textColor="?android:attr/textColorSecondary"
-            android:textSize="12sp" />
+            android:textAppearance="?android:attr/textAppearanceListItemSecondary" />
     </LinearLayout>
 
     <com.google.android.material.materialswitch.MaterialSwitch
