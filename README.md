@@ -72,6 +72,11 @@ cd Transfer
 
 The debug APK lands at `app/build/outputs/apk/debug/app-debug.apk`.
 
+Release builds are signed with the fork's own key (`CN=Transfer Fork`). The encrypted backup is
+`app/keystore/transfer-key.jks.gpg`; provide `KEYSTORE_PASSWORD`, `KEY_ALIAS`, and `KEY_PASSWORD`
+to build locally, or run the manual **Release APK** workflow. Builds signed with the old debug key
+must be uninstalled before installing a release-signed APK.
+
 The original, unchanged release is at [matan-h/Transfer releases](https://github.com/matan-h/Transfer/releases).
 
 ## What changed in this fork
@@ -90,7 +95,7 @@ The original, unchanged release is at [matan-h/Transfer releases](https://github
 - Added fork attribution and a "My GitHub" link to the About screen; the original author credit is retained.
 - Instrumented tests (`AppFlowTest`) run against the Rust server; DocumentsUI interactions made locale-tolerant; 5/5 tests pass on the test device.
 
-Known limitations compared to upstream: no release keystore is bundled (build produces an unsigned release unless you provide `KEYSTORE_*` env vars); upload support on cloud/non-seekable document providers relies on chunked streaming (no `sendfile`); this is a personal fork with no support or release cadence promised.
+Known limitations compared to upstream: release builds need the fork's keystore (see above); upload support on cloud/non-seekable document providers relies on chunked streaming (no `sendfile`); this is a personal fork with no support or release cadence promised.
 
 ## Getting Started
 
