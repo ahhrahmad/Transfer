@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.edit
 import androidx.core.net.toUri
-import androidx.documentfile.provider.DocumentFile
+
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -117,8 +117,9 @@ class SettingsActivity : AppCompatActivity() {
             val folderPreference = findPreference<Preference>("pref_key_shared_folder")
             if (uriString != null) {
                 val uri = uriString.toUri()
-                val docFile = DocumentFile.fromTreeUri(requireContext(), uri)
-                folderPreference?.summary = docFile?.name ?: uri.path
+                // Avoid I/O on the main thread (DocumentFile.fromTreeUri can block on some
+                // providers/ROMs and freeze Settings). Show the last path segment instead.
+                folderPreference?.summary = uri.lastPathSegment ?: uri.path
             } else {
                 folderPreference?.summary = getString(R.string.no_folder_selected)
             }

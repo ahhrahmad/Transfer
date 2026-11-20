@@ -408,7 +408,7 @@ class FileServerService : Service(), SharedPreferences.OnSharedPreferenceChangeL
         val notification = NotificationCompat.Builder(this, PERMISSION_NOTIFICATION_CHANNEL_ID)
             .setContentTitle(getString(R.string.permission_request_title))
             .setContentText(getString(R.string.permission_request_message, ipAddress))
-            .setSmallIcon(R.drawable.ic_stat_name).setContentIntent(contentIntent)
+            .setSmallIcon(R.drawable.ic_swap_vert).setContentIntent(contentIntent)
             .setAutoCancel(true).setPriority(NotificationCompat.PRIORITY_HIGH)
             .addAction(0, getString(R.string.allow), allowPendingIntent)
             .addAction(0, getString(R.string.deny), denyPendingIntent).build()
@@ -453,7 +453,7 @@ class FileServerService : Service(), SharedPreferences.OnSharedPreferenceChangeL
         }
 
         return NotificationCompat.Builder(this, Constants.NOTIFICATION_CHANNEL_ID)
-            .setContentTitle(title).setContentText(text).setSmallIcon(R.drawable.ic_stat_name)
+            .setContentTitle(title).setContentText(text).setSmallIcon(R.drawable.ic_swap_vert)
             .setContentIntent(pendingIntent).setOngoing(true)
             .addAction(R.drawable.ic_stop_black, getString(R.string.stop_server), stopPendingIntent)
             .build()
