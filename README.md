@@ -63,7 +63,7 @@ Imagine you need to transfer a file between your laptop and desktop — but you 
 This fork is not published to app stores. Build it from source:
 
 ```bash
-git clone https://github.com/ahhrahmad/Transfer.git
+git clone https://github.com/ahhrahmad/Transfer-Fork.git
 cd Transfer
 
 # Requirements: JDK 21, Android SDK/NDK (see CONTRIBUTING.md), Rust 1.85+ with cargo-ndk
