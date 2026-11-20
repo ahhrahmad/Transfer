@@ -15,8 +15,9 @@
     --error-color: #B3261E;
 }
 
-/* Dark mode variables - updated to resemble app's themes.xml/colors.xml */
-body.dark-mode {
+/* Dark mode: follows the browser / OS theme (prefers-color-scheme) */
+@media (prefers-color-scheme: dark) {
+:root {
     --app-background: #121212;
     --card-background: #1E1E1E;
     --primary-color: #2B2B2B;
@@ -30,6 +31,7 @@ body.dark-mode {
     --divider-color: #3A3A3A;
     --success-color: #66BB6A;
     --error-color: #F2B8B5;
+}
 }
 
 /* General styles */
@@ -70,30 +72,6 @@ header p {
     opacity: 0.9;
 }
 
-.theme-toggle-button {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: none;
-    border: none;
-    color: var(--white);
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 50%;
-    transition: background-color 0.2s ease, transform 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-}
-
-.theme-toggle-button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    transform: scale(1.05);
-}
-
 main {
     flex: 1;
     /* Adjusted max-width for more horizontal space */
@@ -119,7 +97,6 @@ h2 {
     margin-top: 0;
     margin-bottom: 1.5rem;
     font-size: 1.6rem;
-    border-bottom: 2px solid var(--divider-color);
     padding-bottom: 0.5rem;
 }
 
@@ -415,6 +392,20 @@ background-color: var(--error-color);
 }
 
 /* Footer */
+footer a {
+    color: #1565C0;
+    text-decoration: none;
+}
+footer a:hover {
+    text-decoration: underline;
+}
+
+@media (prefers-color-scheme: dark) {
+    footer a {
+        color: #90CAF9;
+    }
+}
+
 footer {
     text-align: center;
     padding: 1.5rem 1rem;

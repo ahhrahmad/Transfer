@@ -4,8 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const filesTableBody = document.querySelector('#files-table tbody');
     const uploadProgressContainer = document.getElementById('upload-progress-container');
     const noFilesMessage = document.getElementById('no-files-message');
-    const themeToggleButton = document.getElementById('theme-toggle');
-    const themeIcon = document.getElementById('theme-icon');
     const pasteButton = document.getElementById('paste-button');
     const downloadAllZipButton = document.getElementById('download-all-zip-button');
 
@@ -19,35 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalConfirmButton = document.getElementById('modal-confirm-button');
     const modalCancelButton = document.getElementById('modal-cancel-button');
     const doNotAskAgainCheckbox = document.getElementById('do-not-ask-again');
-
-    // --- Theme Toggle ---
-    function applyTheme(theme) {
-        if (theme === 'dark') {
-            document.body.classList.add('dark-mode');
-            themeIcon.textContent = '☀️'; // Sun icon for dark mode (to switch to light)
-        } else {
-            document.body.classList.remove('dark-mode');
-            themeIcon.textContent = '🌙'; // Moon icon for light mode (to switch to dark)
-        }
-    }
-
-    // Load theme preference from localStorage
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-        applyTheme(savedTheme);
-    } else {
-        // Detect system preference for dark or light mode
-        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        applyTheme(prefersDark ? 'dark' : 'light');
-    }
-
-    // Toggle theme on button click
-    themeToggleButton.addEventListener('click', () => {
-        const currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        applyTheme(newTheme);
-        localStorage.setItem('theme', newTheme);
-    });
 
     // --- Custom Confirmation Modal Logic ---
     let currentConfirmCallback = null;
