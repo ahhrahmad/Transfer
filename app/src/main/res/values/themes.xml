@@ -56,7 +56,6 @@
         <item name="actionOverflowButtonStyle">@style/Widget.App.Overflow</item>
         <item name="homeAsUpIndicator">@drawable/ic_arrow_back</item>
         <item name="popupTheme">@style/AppTheme.PopupOverlay</item>
-        <item name="android:theme">@style/ThemeOverlay.AppCompat.Light</item>
     </style>
 
     <!--    control menu text colors-->

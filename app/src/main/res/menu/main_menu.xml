@@ -5,6 +5,7 @@
         android:id="@+id/action_qr"
         android:title="@string/show_qr_code"
         android:icon="@drawable/ic_qr_code"
+        app:iconTint="?attr/colorOnSurface"
         app:showAsAction="ifRoom" />
 
     <item
