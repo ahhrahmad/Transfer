@@ -164,11 +164,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Bind to the FileServerService (only on fresh launch)
-        if (savedInstanceState == null) {
-            Intent(this, FileServerService::class.java).also { intent ->
-                bindService(intent, serviceConnection, BIND_AUTO_CREATE)
-            }
+        // (Re)bind to the existing FileServerService so the UI reconnects after recreation.
+        Intent(this, FileServerService::class.java).also { intent ->
+            bindService(intent, serviceConnection, BIND_AUTO_CREATE)
         }
 
     }
