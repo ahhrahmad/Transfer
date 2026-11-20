@@ -20,7 +20,9 @@ jobs:
           cache: gradle
 
       - name: Check Maven Central
-        run: curl -sS -o /dev/null -w 'maven central: %{http_code}\n' https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/2.0.20/kotlin-stdlib-2.0.20.pom
+        run: |
+          curl -sS -o /dev/null -w 'maven central: %{http_code}\n' https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/2.0.20/kotlin-stdlib-2.0.20.pom
+          getent hosts repo.maven.apache.org | head -2
 
       - name: Install Android NDK
         run: |
