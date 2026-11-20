@@ -87,6 +87,20 @@ class MainActivity : AppCompatActivity() {
             isServiceBound = true
             fileServerService?.activityResumed() // Notify service that UI is active and ready
             observeServerState()
+            // Ensure the IP dropdown is populated immediately after (re)binding.
+            fileServerService?.serverState?.value?.let { state ->
+                when (state) {
+                    is ServerState.Running -> {
+                        val entries = listOfNotNull(
+                            state.hosts.localIp?.let { IpEntry("WiFi:", "$it:${state.port}") },
+                            state.hosts.localHostname?.let { IpEntry("Hostname:", "$it:${state.port}") },
+                            state.hosts.hotspotIp?.let { IpEntry("Hotspot:", "$it:${state.port}") }
+                        )
+                        updateIpDropdown(entries)
+                    }
+                    else -> {}
+                }
+            }
             observeIpPermissionRequests()
             observePullRefresh()
         }
