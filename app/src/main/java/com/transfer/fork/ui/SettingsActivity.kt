@@ -139,11 +139,6 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    override fun onConfigurationChanged(newConfig: android.content.res.Configuration) {
-        super.onConfigurationChanged(newConfig)
-        delegate.applyDayNight()
-    }
-
     override fun onSupportNavigateUp(): Boolean {
         onBackPressedDispatcher.onBackPressed()
         return true

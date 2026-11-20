@@ -148,8 +148,11 @@ class MainActivity : AppCompatActivity() {
         viewModel.selectedFolderUri.observe(this) { uri ->
             currentSelectedFolderUri = uri
             if (uri != null) {
-                // If URI is valid, ensure the server is started with it
-                startFileServer(uri)
+                // Only start the service on a fresh launch; on recreation (e.g. theme change)
+                // the service is already running, so avoid restarting/binding again.
+                if (savedInstanceState == null) {
+                    startFileServer(uri)
+                }
                 lifecycleScope.launch {
                     shareHandler.handleIntent(intent, currentSelectedFolderUri)}
             } else {
@@ -158,9 +161,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Bind to the FileServerService
-        Intent(this, FileServerService::class.java).also { intent ->
-            bindService(intent, serviceConnection, BIND_AUTO_CREATE)
+        // Bind to the FileServerService (only on fresh launch)
+        if (savedInstanceState == null) {
+            Intent(this, FileServerService::class.java).also { intent ->
+                bindService(intent, serviceConnection, BIND_AUTO_CREATE)
+            }
         }
 
     }
@@ -168,12 +173,6 @@ class MainActivity : AppCompatActivity() {
     private fun navigateToSettingsWithMessage(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
         startActivity(Intent(this, SettingsActivity::class.java))
-    }
-
-    override fun onConfigurationChanged(newConfig: android.content.res.Configuration) {
-        super.onConfigurationChanged(newConfig)
-        // Apply the new day/night theme without recreating the activity.
-        delegate.applyDayNight()
     }
 
     override fun onNewIntent(intent: Intent) {
