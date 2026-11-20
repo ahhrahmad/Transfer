@@ -21,12 +21,15 @@ import com.transfer.fork.R
 
 class SettingsActivity : AppCompatActivity() {
 
+    private var settingsFragment: SettingsFragment? = null
+
     private val selectFolderLauncher =
         registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri: Uri? ->
             if (uri != null) {
                 FileUtils.persistUriPermission(this, uri)
                 val prefs = getSharedPreferences(Constants.SHARED_PREFS_NAME, MODE_PRIVATE)
                 prefs.edit { putString(Constants.EXTRA_FOLDER_URI, uri.toString()) }
+                settingsFragment?.updateFolderSummary()
                 Toast.makeText(this, "Shared folder selected", Toast.LENGTH_SHORT).show()
             }
         }
@@ -45,10 +48,14 @@ class SettingsActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         if (savedInstanceState == null) {
+            val fragment = SettingsFragment()
+            settingsFragment = fragment
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.settings_container, SettingsFragment())
+                .replace(R.id.settings_container, fragment)
                 .commit()
+        } else {
+            settingsFragment = supportFragmentManager.findFragmentById(R.id.settings_container) as? SettingsFragment
         }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -111,7 +118,7 @@ class SettingsActivity : AppCompatActivity() {
             }
         }
 
-        private fun updateFolderSummary() {
+        fun updateFolderSummary() {
             val prefs = preferenceManager.sharedPreferences
             val uriString = prefs?.getString(Constants.EXTRA_FOLDER_URI, null)
             val folderPreference = findPreference<Preference>("pref_key_shared_folder")
