@@ -152,6 +152,44 @@ button:hover {
     box-shadow: 0 4px 8px var(--shadow-medium);
 }
 
+/* M3 checkboxes (selection controls) */
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    vertical-align: middle;
+    border: 2px solid var(--text-secondary);
+    border-radius: 2px;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+input[type="checkbox"]:checked {
+    background-color: var(--text-primary);
+    border-color: var(--text-primary);
+}
+
+input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 1px;
+    width: 4px;
+    height: 8px;
+    border: solid var(--card-background);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+input[type="checkbox"]:focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 2px;
+}
+
 /* Table Styles */
 .table-container {
     overflow-x: auto;
@@ -350,6 +388,13 @@ background-color: var(--error-color);
     /* Default stroke width for icons */
     vertical-align: middle;
     /* Align icons nicely with text if any */
+}
+
+/* Material Symbols are solid shapes; the stroke above would thicken them */
+#paste-button svg,
+.download-icon svg,
+.delete-icon svg {
+    stroke: none;
 }
 
 
