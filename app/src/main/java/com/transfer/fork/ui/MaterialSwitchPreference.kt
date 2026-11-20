@@ -29,6 +29,10 @@ class MaterialSwitchPreference(context: Context, attrs: AttributeSet? = null) :
         checked = if (key == null) true else prefs.getBoolean(key!!, true)
 
         val sw = holder.findViewById(R.id.material_switch) as MaterialSwitch
+        // Guard against NPE in SwitchCompat.onMeasure on some ROMs (textOn/textOff null).
+        sw.textOn = ""
+        sw.textOff = ""
+        sw.showText = false
         sw.isChecked = checked
         sw.setOnCheckedChangeListener { _, b ->
             checked = b
