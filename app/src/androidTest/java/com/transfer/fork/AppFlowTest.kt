@@ -43,6 +43,7 @@ import java.io.RandomAccessFile
 import java.net.URLDecoder
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
+import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.regex.Pattern
 
@@ -157,10 +158,60 @@ class AppFlowTest {
         // Initialize UI Automator
         val instrumentation = InstrumentationRegistry.getInstrumentation()
         device = UiDevice.getInstance(instrumentation)
+        // A locked screen makes the service post a notification instead of showing the dialog.
+        runCatching { device.wakeUp() }
+        runCatching { device.executeShellCommand("wm dismiss-keyguard") }
     }
 
     private fun addToCreated(filename: String) {
         synchronized(createdFiles) { createdFiles.add(filename) }
+    }
+
+    private fun findAllowButton(): UiObject2? =
+        device.findObject(By.text("Allow"))
+            ?: device.findObject(By.text("ALLOW"))
+            ?: device.findObject(By.text("Izinkan"))
+            ?: device.findObject(By.text("IZINKAN"))
+            ?: device.findObject(By.res("android:id/button1"))
+
+    private fun waitForAllowButton(timeoutMs: Long): UiObject2? {
+        val deadline = System.currentTimeMillis() + timeoutMs
+        while (System.currentTimeMillis() < deadline) {
+            findAllowButton()?.let { return it }
+            Thread.sleep(250)
+        }
+        return null
+    }
+
+    /**
+     * The service shows a dialog when the activity is in the foreground and a
+     * notification otherwise. A cached approval skips both, so also stop waiting
+     * once the request has completed.
+     */
+    private fun approveAccessRequest(response: CountDownLatch) {
+        var allow = waitForAllowButton(10_000)
+
+        if (allow == null && response.count > 0) {
+            runCatching { device.openNotification() }
+            val action = waitForAllowButton(UI_AUTOMATOR_TIMEOUT)
+            if (action != null) {
+                allow = action
+            } else {
+                val notification = device.findObject(By.textContains("Allow access from"))
+                if (notification != null) {
+                    notification.click() // opens MainActivity, which forwards the pending prompt
+                    allow = waitForAllowButton(UI_AUTOMATOR_TIMEOUT)
+                } else {
+                    device.pressBack()
+                }
+            }
+        }
+
+        if (allow != null) allow.click()
+        Assert.assertTrue(
+            "No approval prompt (dialog or notification) and the access request did not complete",
+            response.await(10, TimeUnit.SECONDS)
+        )
     }
 
     private fun uploadFileHttp(
@@ -318,22 +369,19 @@ class AppFlowTest {
             .get()
             .build()
 
+        val responseLatch = CountDownLatch(1)
         client.newCall(allow_request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                // it'll almost certainly timeout—ignore
+                responseLatch.countDown()
             }
 
             override fun onResponse(call: Call, response: Response) {
                 response.close()
+                responseLatch.countDown()
             }
         })
 
-
-        val allowButton = device.wait(Until.findObject(By.text("ALLOW")), UI_AUTOMATOR_TIMEOUT)
-            ?: device.wait(Until.findObject(By.text("IZINKAN")), UI_AUTOMATOR_TIMEOUT)
-            ?: device.wait(Until.findObject(By.res("android:id/button1")), UI_AUTOMATOR_TIMEOUT)
-        Assert.assertNotNull("ALLOW button not found", allowButton)
-        allowButton.click()
+        approveAccessRequest(responseLatch)
 
 
         // --- Step 3: Upload a file via HTTP ---

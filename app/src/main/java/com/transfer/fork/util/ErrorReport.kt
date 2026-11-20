@@ -8,7 +8,7 @@ import androidx.core.net.toUri
 import com.transfer.fork.BuildConfig
 
 class ErrorReport {
-    val baseUri = "https://github.com/matan-h/Transfer/issues/new?template=bug_report.yml&".toUri();
+    val baseUri = "https://github.com/ahhrahmad/Transfer/issues/new?template=bug_report.yml&".toUri();
 
     @Suppress("SameParameterValue")
     private fun gen_url(deviceModel: String, androidVersion: String, appVersion: String, additionalText: String): String {

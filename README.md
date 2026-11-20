@@ -4,8 +4,9 @@
 >
 > Original project: <https://github.com/matan-h/Transfer>
 > Original author: [matan-h](https://github.com/matan-h) (`© matan-h`, MIT license — see `LICENSE`)
+> Based on upstream release v0.6.1.
 >
-> This is a private, non-commercial fork made for learning and personal use. It is **not affiliated
+> This is a personal, non-commercial fork made for learning and personal use. It is **not affiliated
 > with, endorsed by, or supported by matan-h**. It is not published to the Play Store or IzzyOnDroid;
 > the only links below are the build-from-source instructions and a link to the original releases.
 >
