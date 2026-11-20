@@ -13,8 +13,7 @@ import android.os.IBinder
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
+
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -35,7 +34,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.textfield.TextInputLayout
 import com.transfer.fork.server.FileServerService
 import com.transfer.fork.server.ServerState
 import com.transfer.fork.ui.AboutActivity
@@ -47,7 +45,6 @@ import com.transfer.fork.util.FileAdapter
 import com.transfer.fork.util.FileItem
 import com.transfer.fork.util.FileUtils
 import com.transfer.fork.util.IpEntry
-import com.transfer.fork.util.IpEntryAdapter
 import com.transfer.fork.util.QRCodeGenerator
 import com.transfer.fork.util.ShareHandler
 import kotlinx.coroutines.launch
@@ -58,9 +55,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
     private lateinit var tvServerStatus: TextView
 
-    private lateinit var actvIps: AutoCompleteTextView
-    private lateinit var tilIps: TextInputLayout
-    private lateinit var ipsAdapter: ArrayAdapter<IpEntry>
+    private lateinit var tvIp: TextView
 
     private lateinit var btnCopyIp: ImageButton
     private lateinit var rvFiles: RecyclerView
@@ -96,7 +91,7 @@ class MainActivity : AppCompatActivity() {
                             state.hosts.localHostname?.let { IpEntry("Hostname:", "$it:${state.port}") },
                             state.hosts.hotspotIp?.let { IpEntry("Hotspot:", "$it:${state.port}") }
                         )
-                        updateIpDropdown(entries)
+                        updateIpDisplay(entries)
                     }
                     else -> {}
                 }
@@ -206,8 +201,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initViews() {
         tvServerStatus = findViewById(R.id.tvServerStatus)
-        tilIps = findViewById(R.id.tilIps)
-        actvIps = findViewById(R.id.actvIps)
+        tvIp = findViewById(R.id.tvIp)
         btnCopyIp = findViewById(R.id.btnCopyIp)
         btnStopServer = findViewById(R.id.btnStopServer)
         rvFiles = findViewById(R.id.rvFiles)
@@ -215,12 +209,7 @@ class MainActivity : AppCompatActivity() {
         viewStatusIndicator = findViewById(R.id.viewStatusIndicator)
         tvNoFilesMessage = findViewById(R.id.tvNoFilesMessage)
         btnStartServer = findViewById(R.id.btnStartServer)
-        ipsAdapter = IpEntryAdapter(this)
-
-        actvIps.setAdapter(ipsAdapter)
-        actvIps.threshold = 0
-        actvIps.setOnClickListener { actvIps.showDropDown() }
-        actvIps.setOnFocusChangeListener { _, hasFocus -> if (hasFocus) actvIps.showDropDown() }
+        // IP dropdown removed; static text view used instead.
     }
 
     private fun getIpURL(): String? {
@@ -229,7 +218,7 @@ class MainActivity : AppCompatActivity() {
                 .show();return null
         }
 
-        val display = actvIps.text?.toString() ?: return noIp();
+        val display = tvIp.text?.toString() ?: return noIp();
         val preRaw = display.substringBefore(":").trim()
         if (preRaw.lowercase() == "error") return noIp();
 
@@ -407,7 +396,7 @@ class MainActivity : AppCompatActivity() {
                                 this@MainActivity,
                                 R.drawable.status_indicator_running
                             )
-                            updateIpDropdown(emptyList(), getString(R.string.server_starting))
+                            updateIpDisplay(emptyList(), getString(R.string.server_starting))
 
                             btnStartServer.visibility = View.GONE
                             btnStopServer.visibility = View.GONE
@@ -439,7 +428,7 @@ class MainActivity : AppCompatActivity() {
                                 hosts.hotspotIp?.let { IpEntry("Hotspot:", "$it:${state.port}") }
                             )
 
-                            updateIpDropdown(entries)
+                            updateIpDisplay(entries)
 
                             btnStartServer.visibility = View.GONE
                             btnStopServer.visibility = View.VISIBLE
@@ -459,7 +448,7 @@ class MainActivity : AppCompatActivity() {
                                 this@MainActivity,
                                 R.drawable.status_indicator_stopped
                             )
-                            updateIpDropdown(emptyList(), getString(R.string.waiting_for_network))
+                            updateIpDisplay(emptyList(), getString(R.string.waiting_for_network))
                             btnStartServer.visibility = View.VISIBLE
                             btnStopServer.visibility = View.GONE
                             btnCopyIp.visibility = View.INVISIBLE
@@ -478,7 +467,7 @@ class MainActivity : AppCompatActivity() {
                                 this@MainActivity,
                                 R.drawable.status_indicator_stopped
                             )
-                            updateIpDropdown(
+                            updateIpDisplay(
                                 emptyList(),
                                 getString(R.string.server_error_format, "")
                             )
@@ -492,18 +481,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateIpDropdown(newEntries: List<IpEntry>, placeholder: String? = null) {
-        ipsAdapter.apply {
-            clear()
-            addAll(newEntries)
-            notifyDataSetChanged()
-        }
-        // Show either first entry or a placeholder
-        actvIps.setText(
-            newEntries.firstOrNull()?.value ?: (placeholder
-                ?: getString(R.string.waiting_for_network)),
-            false      // don't trigger filtering
-        )
+    private fun updateIpDisplay(newEntries: List<IpEntry>, placeholder: String? = null) {
+        val value = newEntries.firstOrNull()?.value
+            ?: (placeholder ?: getString(R.string.waiting_for_network))
+        tvIp.text = value
         // Visibility of copy and QR buttons
         btnCopyIp.visibility = if (newEntries.isEmpty()) View.INVISIBLE else View.VISIBLE
     }

@@ -72,20 +72,18 @@ app:layout_constraintEnd_toEndOf="parent">
         android:gravity="center_vertical"
         android:layout_marginTop="12dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilIps"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        <TextView
+            android:id="@+id/tvIp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <AutoCompleteTextView
-                android:id="@+id/actvIps"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/ip_address"
-                android:inputType="none"/>
-        </com.google.android.material.textfield.TextInputLayout>
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:textColor="?android:attr/textColorPrimary"
+            android:background="?attr/colorSurface"
+            android:ellipsize="end"
+            android:maxLines="1" />
 
         <ImageButton
             android:id="@+id/btnCopyIp"
