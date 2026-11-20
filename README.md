@@ -9,7 +9,7 @@
 > with, endorsed by, or supported by matan-h**. It is not published to the Play Store or IzzyOnDroid;
 > the only links below are the build-from-source instructions and a link to the original releases.
 >
-> Screenshots show this fork. See [What changed in this fork](#what-changed-in-this-fork) and
+> Screenshots show this fork: the app (first six) and the web UI in a browser (last two). See [What changed in this fork](#what-changed-in-this-fork) and
 > [License and attribution](#license-and-attribution).
 >
 > This fork was developed with AI assistance and reviewed/tested by the repository author.
@@ -27,6 +27,9 @@ A simple local file server app for Android. Download and upload files quickly ac
     	<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/04.png" width="150px" />
     	<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/05.png" width="150px" />
     	<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/06.png" width="150px" />
+    	<br /><br />
+    	<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/07.png" width="150px" />
+    	<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/08.png" width="150px" />
     </td>
   </tr>
 </table>
