@@ -2,6 +2,7 @@
     <style name="Theme.TransferApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Background -->
         <item name="android:colorBackground">@color/app_background_color</item>
+        <item name="android:windowBackground">@color/app_background_color</item>
         <item name="colorSurface">@color/card_background_color</item>
         <item name="colorPrimaryContainer">@color/colorPrimaryContainer</item>
         <item name="colorOnPrimaryContainer">@color/colorOnPrimaryContainer</item>

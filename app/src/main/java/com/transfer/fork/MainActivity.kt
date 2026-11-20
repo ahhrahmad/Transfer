@@ -152,6 +152,9 @@ class MainActivity : AppCompatActivity() {
                 // the service is already running, so avoid restarting/binding again.
                 if (savedInstanceState == null) {
                     startFileServer(uri)
+                } else {
+                    // Ensure the file list is populated after recreation.
+                    viewModel.loadFiles(uri)
                 }
                 lifecycleScope.launch {
                     shareHandler.handleIntent(intent, currentSelectedFolderUri)}
