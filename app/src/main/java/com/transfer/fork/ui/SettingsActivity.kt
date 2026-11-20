@@ -126,7 +126,13 @@ class SettingsActivity : AppCompatActivity() {
                 val uri = uriString.toUri()
                 // Avoid I/O on the main thread (DocumentFile.fromTreeUri can block on some
                 // providers/ROMs and freeze Settings). Show the last path segment instead.
-                folderPreference?.summary = uri.lastPathSegment ?: uri.path
+                val raw = uri.lastPathSegment ?: uri.path ?: ""
+                // Capitalize the storage volume name (e.g. "primary:" -> "Primary:").
+                val summary = if (raw.contains(":")) {
+                    val idx = raw.indexOf(":")
+                    raw.substring(0, idx).replaceFirstChar { it.uppercaseChar() } + raw.substring(idx)
+                } else raw
+                folderPreference?.summary = summary
             } else {
                 folderPreference?.summary = getString(R.string.no_folder_selected)
             }
