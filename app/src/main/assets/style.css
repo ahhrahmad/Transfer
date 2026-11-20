@@ -304,8 +304,14 @@ background-color: var(--error-color);
     display: flex; /* Enable Flexbox */
     justify-content: space-between; /* Puts space between the h2 and the button div */
     align-items: center; /* Vertically aligns items in the middle */
+    gap: 0.75rem;
     margin-bottom: 1rem; /* Maintains the spacing below the header */
     padding: 0 15px; /* Add some padding to the sides */
+}
+
+/* h2 margin would skew flex centering against the buttons/icons on the right */
+.header-container h2 {
+    margin: 0;
 }
 
 #files-actions {
@@ -522,6 +528,26 @@ footer {
     .icon-button {
         padding: 0.4rem;
         /* Smaller icons on mobile */
+    }
+
+    .header-container h2 {
+        font-size: 1.25rem; /* keeps "Available Files" on one line next to the button */
+        white-space: nowrap;
+    }
+
+    #download-all-zip-button {
+        padding: 0.6rem 0.9rem;
+        font-size: 0.85rem;
+        white-space: nowrap;
+    }
+
+    /* Align the right-hand controls with the label line in each card row */
+    #files-table td input[type="checkbox"] {
+        vertical-align: middle;
+    }
+
+    #files-table td .action-icons-container .icon-button {
+        padding: 0.2rem;
     }
 
     .icon-button svg {
