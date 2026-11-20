@@ -663,7 +663,7 @@ footer {
         white-space: nowrap;
         text-align: left;
         font-weight: 600;
-        color: var(--primary-color); /* Make labels stand out */
+        color: var(--text-primary); /* Adapt to theme */
     }
 
     /* Ensure the actions container aligns correctly within the new layout */

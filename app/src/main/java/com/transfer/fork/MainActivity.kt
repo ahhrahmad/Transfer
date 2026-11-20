@@ -192,7 +192,9 @@ class MainActivity : AppCompatActivity() {
         ipsAdapter = IpEntryAdapter(this)
 
         actvIps.setAdapter(ipsAdapter)
-
+        actvIps.threshold = 0
+        actvIps.setOnClickListener { actvIps.showDropDown() }
+        actvIps.setOnFocusChangeListener { _, hasFocus -> if (hasFocus) actvIps.showDropDown() }
     }
 
     private fun getIpURL(): String? {
